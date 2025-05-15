@@ -108,12 +108,10 @@
 - [ ] Buffer Cache;
 - [ ] Synchronization;
 
---- repetir isso daqui com as adições do detalhes
-
 ### Detalhamentos
 
-#### Parte 1
-
+<details>
+   <summary>Parte 1</summary>
 <details>
    <summary>Objetivos Principais</summary>
 
@@ -206,3 +204,413 @@
 - Há esses vídeos de guia sobre o assunto, caso necessite de ajuda: `https://www.youtube.com/watch?v=myO2bs5LMak` e `https://www.youtube.com/watch?v=57r9OCN1EfA` (são aulas sobre a implementação do projeto completo do PintOS);
 
 </details>
+</details>
+<details>
+   <summary>Parte 2</summary>
+<details>
+   <summary>Objetivos Principais</summary>
+   Implementação da lógica referente a execução de programas no sistema operacional, passando por passagem de argumentos, acesso de memória, system calls, término de processos e permissões de execução; Vai modificar basicamente os arquivos nos diretórios `userprog/`  e `filesys/`
+ </details>
+
+<details>
+   <summary>Argument Passing</summary>
+ </details>
+
+<details>
+   <summary>User Memory Acess</summary>
+ </details>
+
+<details>
+   <summary>System Calls</summary>
+ </details>
+
+<details>
+   <summary>Process Termination and Wait</summary>
+ </details>
+
+<details>
+   <summary>Denying Writes to executables</summary>
+ </details>
+
+ <details>
+    <summary>Tests</summary>
+
+| #  | Teste                                | Implementada | Testada | Funcionando |
+|----|--------------------------------------|:------------:|:-------:|:-----------:|
+| 1  | `userprog/args-none`                 |      ❌      |   ❌    |      ❌      |
+| 2  | `userprog/args-single`               |      ❌      |   ❌    |      ❌      |
+| 3  | `userprog/args-multiple`             |      ❌      |   ❌    |      ❌      |
+| 4  | `userprog/args-many`                 |      ❌      |   ❌    |      ❌      |
+| 5  | `userprog/args-dbl-space`            |      ❌      |   ❌    |      ❌      |
+| 6  | `userprog/sc-bad-sp`                 |      ❌      |   ❌    |      ❌      |
+| 7  | `userprog/sc-bad-arg`                |      ❌      |   ❌    |      ❌      |
+| 8  | `userprog/sc-boundary`               |      ❌      |   ❌    |      ❌      |
+| 9  | `userprog/sc-boundary-2`             |      ❌      |   ❌    |      ❌      |
+| 10 | `userprog/sc-boundary-3`             |      ❌      |   ❌    |      ❌      |
+| 11 | `userprog/halt`                      |      ❌      |   ❌    |      ❌      |
+| 12 | `userprog/exit`                      |      ❌      |   ❌    |      ❌      |
+| 13 | `userprog/create-normal`             |      ❌      |   ❌    |      ❌      |
+| 14 | `userprog/create-empty`              |      ❌      |   ❌    |      ❌      |
+| 15 | `userprog/create-null`               |      ❌      |   ❌    |      ❌      |
+| 16 | `userprog/create-bad-ptr`            |      ❌      |   ❌    |      ❌      |
+| 17 | `userprog/create-long`               |      ❌      |   ❌    |      ❌      |
+| 18 | `userprog/create-exists`             |      ❌      |   ❌    |      ❌      |
+| 19 | `userprog/create-bound`              |      ❌      |   ❌    |      ❌      |
+| 20 | `userprog/open-normal`               |      ❌      |   ❌    |      ❌      |
+| 21 | `userprog/open-missing`              |      ❌      |   ❌    |      ❌      |
+| 22 | `userprog/open-boundary`             |      ❌      |   ❌    |      ❌      |
+| 23 | `userprog/open-empty`                |      ❌      |   ❌    |      ❌      |
+| 24 | `userprog/open-null`                 |      ❌      |   ❌    |      ❌      |
+| 25 | `userprog/open-bad-ptr`              |      ❌      |   ❌    |      ❌      |
+| 26 | `userprog/open-twice`                |      ❌      |   ❌    |      ❌      |
+| 27 | `userprog/close-normal`              |      ❌      |   ❌    |      ❌      |
+| 28 | `userprog/close-twice`               |      ❌      |   ❌    |      ❌      |
+| 29 | `userprog/close-stdin`               |      ❌      |   ❌    |      ❌      |
+| 30 | `userprog/close-stdout`              |      ❌      |   ❌    |      ❌      |
+| 31 | `userprog/close-bad-fd`              |      ❌      |   ❌    |      ❌      |
+| 32 | `userprog/read-normal`               |      ❌      |   ❌    |      ❌      |
+| 33 | `userprog/read-bad-ptr`              |      ❌      |   ❌    |      ❌      |
+| 34 | `userprog/read-boundary`             |      ❌      |   ❌    |      ❌      |
+| 35 | `userprog/read-zero`                 |      ❌      |   ❌    |      ❌      |
+| 36 | `userprog/read-stdout`               |      ❌      |   ❌    |      ❌      |
+| 37 | `userprog/read-bad-fd`               |      ❌      |   ❌    |      ❌      |
+| 38 | `userprog/write-normal`              |      ❌      |   ❌    |      ❌      |
+| 39 | `userprog/write-bad-ptr`             |      ❌      |   ❌    |      ❌      |
+| 40 | `userprog/write-boundary`            |      ❌      |   ❌    |      ❌      |
+| 41 | `userprog/write-zero`                |      ❌      |   ❌    |      ❌      |
+| 42 | `userprog/write-stdin`               |      ❌      |   ❌    |      ❌      |
+| 43 | `userprog/write-bad-fd`              |      ❌      |   ❌    |      ❌      |
+| 44 | `userprog/exec-once`                 |      ❌      |   ❌    |      ❌      |
+| 45 | `userprog/exec-arg`                  |      ❌      |   ❌    |      ❌      |
+| 46 | `userprog/exec-bound`                |      ❌      |   ❌    |      ❌      |
+| 47 | `userprog/exec-bound-2`              |      ❌      |   ❌    |      ❌      |
+| 48 | `userprog/exec-bound-3`              |      ❌      |   ❌    |      ❌      |
+| 49 | `userprog/exec-multiple`             |      ❌      |   ❌    |      ❌      |
+| 50 | `userprog/exec-missing`              |      ❌      |   ❌    |      ❌      |
+| 51 | `userprog/exec-bad-ptr`              |      ❌      |   ❌    |      ❌      |
+| 52 | `userprog/wait-simple`               |      ❌      |   ❌    |      ❌      |
+| 53 | `userprog/wait-twice`                |      ❌      |   ❌    |      ❌      |
+| 54 | `userprog/wait-killed`               |      ❌      |   ❌    |      ❌      |
+| 55 | `userprog/wait-bad-pid`              |      ❌      |   ❌    |      ❌      |
+| 56 | `userprog/multi-recurse`             |      ❌      |   ❌    |      ❌      |
+| 57 | `userprog/multi-child-fd`            |      ❌      |   ❌    |      ❌      |
+| 58 | `userprog/rox-simple`                |      ❌      |   ❌    |      ❌      |
+| 59 | `userprog/rox-child`                 |      ❌      |   ❌    |      ❌      |
+| 60 | `userprog/rox-multichild`            |      ❌      |   ❌    |      ❌      |
+| 61 | `userprog/bad-read`                  |      ❌      |   ❌    |      ❌      |
+| 62 | `userprog/bad-write`                 |      ❌      |   ❌    |      ❌      |
+| 63 | `userprog/bad-read2`                 |      ❌      |   ❌    |      ❌      |
+| 64 | `userprog/bad-write2`                |      ❌      |   ❌    |      ❌      |
+| 65 | `userprog/bad-jump`                  |      ❌      |   ❌    |      ❌      |
+| 66 | `userprog/bad-jump2`                 |      ❌      |   ❌    |      ❌      |
+| 67 | `userprog/no-vm/multi-oom`           |      ❌      |   ❌    |      ❌      |
+| 68 | `filesys/base/lg-create`             |      ❌      |   ❌    |      ❌      |
+| 69 | `filesys/base/lg-full`               |      ❌      |   ❌    |      ❌      |
+| 70 | `filesys/base/lg-random`             |      ❌      |   ❌    |      ❌      |
+| 71 | `filesys/base/lg-seq-block`          |      ❌      |   ❌    |      ❌      |
+| 72 | `filesys/base/lg-seq-random`         |      ❌      |   ❌    |      ❌      |
+| 73 | `filesys/base/sm-create`             |      ❌      |   ❌    |      ❌      |
+| 74 | `filesys/base/sm-full`               |      ❌      |   ❌    |      ❌      |
+| 75 | `filesys/base/sm-random`             |      ❌      |   ❌    |      ❌      |
+| 76 | `filesys/base/sm-seq-block`          |      ❌      |   ❌    |      ❌      |
+| 77 | `filesys/base/sm-seq-random`         |      ❌      |   ❌    |      ❌      |
+| 78 | `filesys/base/syn-read`              |      ❌      |   ❌    |      ❌      |
+| 79 | `filesys/base/syn-remove`            |      ❌      |   ❌    |      ❌      |
+| 80 | `filesys/base/syn-write`             |      ❌      |   ❌    |      ❌      |
+
+  </details>
+</details>
+<details>
+   <summary>Parte 3</summary>
+<details>
+TODO: Talvez mudar como apresentar as principais estruturas
+   <summary>Objetivos Principais</summary>
+   Toda essa parte do projeto basicamente vai lidar com diferentes tipos de paginação para diferentes objetivos, em resumo vai ser necessário implementar 4 estruturas de dados, cada uma com uma lógica e servindo para completar um dos objetivos dessa parte; Vai precisar modificar as pastas `vm/`,  `devices/` e `userprog/`
+##### Paging
+   A 1° estrutura é uma tabela de páginas suplementar que vai conter dados adicionais sobre cada página em uso ou não, envolvendo talvez modificar o `pagedir`(segundo a documentação modificar isso é só para quem é nível avançado) e melhorar o caso da ocorrência de um `page_fault()`
+##### Stack Growth
+Basicamente implementar uma tabela representando os frames atualmente carregados em memória, usando principalmente de funções como as encontradas em `palloc.c`
+##### Memory Mapped Files
+Vai criar uma tabela de mapeamento dos arquivos em disco, usando da lógica de páginas virtuais
+##### Acessing User Memory
+A última estrutura vai ser uma tabela de swap, que vai gerenciar os slots disponíveis e usados na memória e gerenciar como vai ocorrer a cópia dos dados para a partição de swap
+ </details>
+
+ <details>
+    <summary>Tests</summary>
+
+| # | Teste | Implementada | Testada | Funcionando |
+|---|--------|:------------:|:-------:|:-----------:|
+| 1 | `userprog/args-none` | ❌ | ❌ | ❌ |
+| 2 | `userprog/args-single` | ❌ | ❌ | ❌ |
+| 3 | `userprog/args-multiple` | ❌ | ❌ | ❌ |
+| 4 | `userprog/args-many` | ❌ | ❌ | ❌ |
+| 5 | `userprog/args-dbl-space` | ❌ | ❌ | ❌ |
+| 6 | `userprog/sc-bad-sp` | ❌ | ❌ | ❌ |
+| 7 | `userprog/sc-bad-arg` | ❌ | ❌ | ❌ |
+| 8 | `userprog/sc-boundary` | ❌ | ❌ | ❌ |
+| 9 | `userprog/sc-boundary-2` | ❌ | ❌ | ❌ |
+| 10 | `userprog/sc-boundary-3` | ❌ | ❌ | ❌ |
+| 11 | `userprog/halt` | ❌ | ❌ | ❌ |
+| 12 | `userprog/exit` | ❌ | ❌ | ❌ |
+| 13 | `userprog/create-normal` | ❌ | ❌ | ❌ |
+| 14 | `userprog/create-empty` | ❌ | ❌ | ❌ |
+| 15 | `userprog/create-null` | ❌ | ❌ | ❌ |
+| 16 | `userprog/create-bad-ptr` | ❌ | ❌ | ❌ |
+| 17 | `userprog/create-long` | ❌ | ❌ | ❌ |
+| 18 | `userprog/create-exists` | ❌ | ❌ | ❌ |
+| 19 | `userprog/create-bound` | ❌ | ❌ | ❌ |
+| 20 | `userprog/open-normal` | ❌ | ❌ | ❌ |
+| 21 | `userprog/open-missing` | ❌ | ❌ | ❌ |
+| 22 | `userprog/open-boundary` | ❌ | ❌ | ❌ |
+| 23 | `userprog/open-empty` | ❌ | ❌ | ❌ |
+| 24 | `userprog/open-null` | ❌ | ❌ | ❌ |
+| 25 | `userprog/open-bad-ptr` | ❌ | ❌ | ❌ |
+| 26 | `userprog/open-twice` | ❌ | ❌ | ❌ |
+| 27 | `userprog/close-normal` | ❌ | ❌ | ❌ |
+| 28 | `userprog/close-twice` | ❌ | ❌ | ❌ |
+| 29 | `userprog/close-stdin` | ❌ | ❌ | ❌ |
+| 30 | `userprog/close-stdout` | ❌ | ❌ | ❌ |
+| 31 | `userprog/close-bad-fd` | ❌ | ❌ | ❌ |
+| 32 | `userprog/read-normal` | ❌ | ❌ | ❌ |
+| 33 | `userprog/read-bad-ptr` | ❌ | ❌ | ❌ |
+| 34 | `userprog/read-boundary` | ❌ | ❌ | ❌ |
+| 35 | `userprog/read-zero` | ❌ | ❌ | ❌ |
+| 36 | `userprog/read-stdout` | ❌ | ❌ | ❌ |
+| 37 | `userprog/read-bad-fd` | ❌ | ❌ | ❌ |
+| 38 | `userprog/write-normal` | ❌ | ❌ | ❌ |
+| 39 | `userprog/write-bad-ptr` | ❌ | ❌ | ❌ |
+| 40 | `userprog/write-boundary` | ❌ | ❌ | ❌ |
+| 41 | `userprog/write-zero` | ❌ | ❌ | ❌ |
+| 42 | `userprog/write-stdin` | ❌ | ❌ | ❌ |
+| 43 | `userprog/write-bad-fd` | ❌ | ❌ | ❌ |
+| 44 | `userprog/exec-once` | ❌ | ❌ | ❌ |
+| 45 | `userprog/exec-arg` | ❌ | ❌ | ❌ |
+| 46 | `userprog/exec-bound` | ❌ | ❌ | ❌ |
+| 47 | `userprog/exec-bound-2` | ❌ | ❌ | ❌ |
+| 48 | `userprog/exec-bound-3` | ❌ | ❌ | ❌ |
+| 49 | `userprog/exec-multiple` | ❌ | ❌ | ❌ |
+| 50 | `userprog/exec-missing` | ❌ | ❌ | ❌ |
+| 51 | `userprog/exec-bad-ptr` | ❌ | ❌ | ❌ |
+| 52 | `userprog/wait-simple` | ❌ | ❌ | ❌ |
+| 53 | `userprog/wait-twice` | ❌ | ❌ | ❌ |
+| 54 | `userprog/wait-killed` | ❌ | ❌ | ❌ |
+| 55 | `userprog/wait-bad-pid` | ❌ | ❌ | ❌ |
+| 56 | `userprog/multi-recurse` | ❌ | ❌ | ❌ |
+| 57 | `userprog/multi-child-fd` | ❌ | ❌ | ❌ |
+| 58 | `userprog/rox-simple` | ❌ | ❌ | ❌ |
+| 59 | `userprog/rox-child` | ❌ | ❌ | ❌ |
+| 60 | `userprog/rox-multichild` | ❌ | ❌ | ❌ |
+| 61 | `userprog/bad-read` | ❌ | ❌ | ❌ |
+| 62 | `userprog/bad-write` | ❌ | ❌ | ❌ |
+| 63 | `userprog/bad-read2` | ❌ | ❌ | ❌ |
+| 64 | `userprog/bad-write2` | ❌ | ❌ | ❌ |
+| 65 | `userprog/bad-jump` | ❌ | ❌ | ❌ |
+| 66 | `userprog/bad-jump2` | ❌ | ❌ | ❌ |
+| 67 | `vm/pt-grow-stack` | ❌ | ❌ | ❌ |
+| 68 | `vm/pt-grow-pusha` | ❌ | ❌ | ❌ |
+| 69 | `vm/pt-grow-bad` | ❌ | ❌ | ❌ |
+| 70 | `vm/pt-big-stk-obj` | ❌ | ❌ | ❌ |
+| 71 | `vm/pt-bad-addr` | ❌ | ❌ | ❌ |
+| 72 | `vm/pt-bad-read` | ❌ | ❌ | ❌ |
+| 73 | `vm/pt-write-code` | ❌ | ❌ | ❌ |
+| 74 | `vm/pt-write-code2` | ❌ | ❌ | ❌ |
+| 75 | `vm/pt-grow-stk-sc` | ❌ | ❌ | ❌ |
+| 76 | `vm/page-linear` | ❌ | ❌ | ❌ |
+| 77 | `vm/page-parallel` | ❌ | ❌ | ❌ |
+| 78 | `vm/page-merge-seq` | ❌ | ❌ | ❌ |
+| 79 | `vm/page-merge-par` | ❌ | ❌ | ❌ |
+| 80 | `vm/page-merge-stk` | ❌ | ❌ | ❌ |
+| 81 | `vm/page-merge-mm` | ❌ | ❌ | ❌ |
+| 82 | `vm/page-shuffle` | ❌ | ❌ | ❌ |
+| 83 | `vm/mmap-read` | ❌ | ❌ | ❌ |
+| 84 | `vm/mmap-close` | ❌ | ❌ | ❌ |
+| 85 | `vm/mmap-unmap` | ❌ | ❌ | ❌ |
+| 86 | `vm/mmap-overlap` | ❌ | ❌ | ❌ |
+| 87 | `vm/mmap-twice` | ❌ | ❌ | ❌ |
+| 88 | `vm/mmap-write` | ❌ | ❌ | ❌ |
+| 89 | `vm/mmap-exit` | ❌ | ❌ | ❌ |
+| 90 | `vm/mmap-shuffle` | ❌ | ❌ | ❌ |
+| 91 | `vm/mmap-bad-fd` | ❌ | ❌ | ❌ |
+| 92 | `vm/mmap-clean` | ❌ | ❌ | ❌ |
+| 93 | `vm/mmap-inherit` | ❌ | ❌ | ❌ |
+| 94 | `vm/mmap-misalign` | ❌ | ❌ | ❌ |
+| 95 | `vm/mmap-null` | ❌ | ❌ | ❌ |
+| 96 | `vm/mmap-over-code` | ❌ | ❌ | ❌ |
+| 97 | `vm/mmap-over-data` | ❌ | ❌ | ❌ |
+| 98 | `vm/mmap-over-stk` | ❌ | ❌ | ❌ |
+| 99 | `vm/mmap-remove` | ❌ | ❌ | ❌ |
+| 100 | `vm/mmap-zero` | ❌ | ❌ | ❌ |
+| 101 | `filesys/base/lg-create` | ❌ | ❌ | ❌ |
+| 102 | `filesys/base/lg-full` | ❌ | ❌ | ❌ |
+| 103 | `filesys/base/lg-random` | ❌ | ❌ | ❌ |
+| 104 | `filesys/base/lg-seq-block` | ❌ | ❌ | ❌ |
+| 105 | `filesys/base/lg-seq-random` | ❌ | ❌ | ❌ |
+| 106 | `filesys/base/sm-create` | ❌ | ❌ | ❌ |
+| 107 | `filesys/base/sm-full` | ❌ | ❌ | ❌ |
+| 108 | `filesys/base/sm-random` | ❌ | ❌ | ❌ |
+| 109 | `filesys/base/sm-seq-block` | ❌ | ❌ | ❌ |
+| 110 | `filesys/base/sm-seq-random` | ❌ | ❌ | ❌ |
+| 111 | `filesys/base/syn-read` | ❌ | ❌ | ❌ |
+| 112 | `filesys/base/syn-remove` | ❌ | ❌ | ❌ |
+| 113 | `filesys/base/syn-write` | ❌ | ❌ | ❌ |
+
+  </details>
+</details>
+<details>
+   <summary>Parte 4</summary>
+<details>
+   <summary>Objetivos Principais</summary>
+ </details>
+
+<details>
+   <summary>Buffer Cache</summary>
+   Implementar um buffer para utilizar de cache dos blocos de arquivos, sugerindo pela documentação de no máximo 64 setores; O algoritmo para gerenciar o cache deve ter desempenho parecido com o algoritmo de clock wise e ser write back/behind, além de que a inserção de blocos subsequentes deve ser feito de forma assíncrona(background).
+ </details>
+
+<details>
+   <summary>Extensible Files</summary>
+   Criação de estruturas de indexação direta, indireta e/ou duplamente indireta para gerenciar a fragmentação dos blocos de arquivos, distribuindo os blocos nos espaços disponíveis; A partição de arquivos será no máximo de 8Mb nos testes, mas deve suportar arquivos maiores que esse limite, permitindo também o crescimento dos arquivos.
+ </details>
+ <details>
+   <summary>Subdirectories</summary>
+ Modificação das syscall's para habilitar os padrões de path usados no UNIX(no caso '/', '.', '..' ..,) criando junto disso a lógica de um namespace hierarquico e a separação do sistema entre processos; Permitir também a criação de arquivos com nomes maiores.
+ </details>
+ <details>
+   <summary>Synchronization</summary>
+   Lógica de leitura e escrita síncrona no sistema de arquivos, sendo que apenas 1 threads pode modificar o sistema por vez, operações em caches difrentes devem ser independetes e múltiplas leituras devem ser feitas em paralelo.
+ </details>
+
+ <details>
+    <summary>Tests</summary>
+
+| # | Teste | Implementada | Testada | Funcionando |
+|---|-----------|:-----------:|:-------:|:-----------:|
+| 1 | `userprog/args-none` | ❌ | ❌ | ❌ |
+| 2 | `userprog/args-single` | ❌ | ❌ | ❌ |
+| 3 | `userprog/args-multiple` | ❌ | ❌ | ❌ |
+| 4 | `userprog/args-many` | ❌ | ❌ | ❌ |
+| 5 | `userprog/args-dbl-space` | ❌ | ❌ | ❌ |
+| 6 | `userprog/sc-bad-sp` | ❌ | ❌ | ❌ |
+| 7 | `userprog/sc-bad-arg` | ❌ | ❌ | ❌ |
+| 8 | `userprog/sc-boundary` | ❌ | ❌ | ❌ |
+| 9 | `userprog/sc-boundary-2` | ❌ | ❌ | ❌ |
+| 10 | `userprog/sc-boundary-3` | ❌ | ❌ | ❌ |
+| 11 | `userprog/halt` | ❌ | ❌ | ❌ |
+| 12 | `userprog/exit` | ❌ | ❌ | ❌ |
+| 13 | `userprog/create-normal` | ❌ | ❌ | ❌ |
+| 14 | `userprog/create-empty` | ❌ | ❌ | ❌ |
+| 15 | `userprog/create-null` | ❌ | ❌ | ❌ |
+| 16 | `userprog/create-bad-ptr` | ❌ | ❌ | ❌ |
+| 17 | `userprog/create-long` | ❌ | ❌ | ❌ |
+| 18 | `userprog/create-exists` | ❌ | ❌ | ❌ |
+| 19 | `userprog/create-bound` | ❌ | ❌ | ❌ |
+| 20 | `userprog/open-normal` | ❌ | ❌ | ❌ |
+| 21 | `userprog/open-missing` | ❌ | ❌ | ❌ |
+| 22 | `userprog/open-boundary` | ❌ | ❌ | ❌ |
+| 23 | `userprog/open-empty` | ❌ | ❌ | ❌ |
+| 24 | `userprog/open-null` | ❌ | ❌ | ❌ |
+| 25 | `userprog/open-bad-ptr` | ❌ | ❌ | ❌ |
+| 26 | `userprog/open-twice` | ❌ | ❌ | ❌ |
+| 27 | `userprog/close-normal` | ❌ | ❌ | ❌ |
+| 28 | `userprog/close-twice` | ❌ | ❌ | ❌ |
+| 29 | `userprog/close-stdin` | ❌ | ❌ | ❌ |
+| 30 | `userprog/close-stdout` | ❌ | ❌ | ❌ |
+| 31 | `userprog/close-bad-fd` | ❌ | ❌ | ❌ |
+| 32 | `userprog/read-normal` | ❌ | ❌ | ❌ |
+| 33 | `userprog/read-bad-ptr` | ❌ | ❌ | ❌ |
+| 34 | `userprog/read-boundary` | ❌ | ❌ | ❌ |
+| 35 | `userprog/read-zero` | ❌ | ❌ | ❌ |
+| 36 | `userprog/read-stdout` | ❌ | ❌ | ❌ |
+| 37 | `userprog/read-bad-fd` | ❌ | ❌ | ❌ |
+| 38 | `userprog/write-normal` | ❌ | ❌ | ❌ |
+| 39 | `userprog/write-bad-ptr` | ❌ | ❌ | ❌ |
+| 40 | `userprog/write-boundary` | ❌ | ❌ | ❌ |
+| 41 | `userprog/write-zero` | ❌ | ❌ | ❌ |
+| 42 | `userprog/write-stdin` | ❌ | ❌ | ❌ |
+| 43 | `userprog/write-bad-fd` | ❌ | ❌ | ❌ |
+| 44 | `userprog/exec-once` | ❌ | ❌ | ❌ |
+| 45 | `userprog/exec-arg` | ❌ | ❌ | ❌ |
+| 46 | `userprog/exec-bound` | ❌ | ❌ | ❌ |
+| 47 | `userprog/exec-bound-2` | ❌ | ❌ | ❌ |
+| 48 | `userprog/exec-bound-3` | ❌ | ❌ | ❌ |
+| 49 | `userprog/exec-multiple` | ❌ | ❌ | ❌ |
+| 50 | `userprog/exec-missing` | ❌ | ❌ | ❌ |
+| 51 | `userprog/exec-bad-ptr` | ❌ | ❌ | ❌ |
+| 52 | `userprog/wait-simple` | ❌ | ❌ | ❌ |
+| 53 | `userprog/wait-twice` | ❌ | ❌ | ❌ |
+| 54 | `userprog/wait-killed` | ❌ | ❌ | ❌ |
+| 55 | `userprog/wait-bad-pid` | ❌ | ❌ | ❌ |
+| 56 | `userprog/multi-recurse` | ❌ | ❌ | ❌ |
+| 57 | `userprog/multi-child-fd` | ❌ | ❌ | ❌ |
+| 58 | `userprog/rox-simple` | ❌ | ❌ | ❌ |
+| 59 | `userprog/rox-child` | ❌ | ❌ | ❌ |
+| 60 | `userprog/rox-multichild` | ❌ | ❌ | ❌ |
+| 61 | `userprog/bad-read` | ❌ | ❌ | ❌ |
+| 62 | `userprog/bad-write` | ❌ | ❌ | ❌ |
+| 63 | `userprog/bad-read2` | ❌ | ❌ | ❌ |
+| 64 | `userprog/bad-write2` | ❌ | ❌ | ❌ |
+| 65 | `userprog/bad-jump` | ❌ | ❌ | ❌ |
+| 66 | `userprog/bad-jump2` | ❌ | ❌ | ❌ |
+| 67 | `filesys/base/lg-create` | ❌ | ❌ | ❌ |
+| 68 | `filesys/base/lg-full` | ❌ | ❌ | ❌ |
+| 69 | `filesys/base/lg-random` | ❌ | ❌ | ❌ |
+| 70 | `filesys/base/lg-seq-block` | ❌ | ❌ | ❌ |
+| 71 | `filesys/base/lg-seq-random` | ❌ | ❌ | ❌ |
+| 72 | `filesys/base/sm-create` | ❌ | ❌ | ❌ |
+| 73 | `filesys/base/sm-full` | ❌ | ❌ | ❌ |
+| 74 | `filesys/base/sm-random` | ❌ | ❌ | ❌ |
+| 75 | `filesys/base/sm-seq-block` | ❌ | ❌ | ❌ |
+| 76 | `filesys/base/sm-seq-random` | ❌ | ❌ | ❌ |
+| 77 | `filesys/base/syn-read` | ❌ | ❌ | ❌ |
+| 78 | `filesys/base/syn-remove` | ❌ | ❌ | ❌ |
+| 79 | `filesys/base/syn-write` | ❌ | ❌ | ❌ |
+| 80 | `filesys/extended/dir-empty-name` | ❌ | ❌ | ❌ |
+| 81 | `filesys/extended/dir-mk-tree` | ❌ | ❌ | ❌ |
+| 82 | `filesys/extended/dir-mkdir` | ❌ | ❌ | ❌ |
+| 83 | `filesys/extended/dir-open` | ❌ | ❌ | ❌ |
+| 84 | `filesys/extended/dir-over-file` | ❌ | ❌ | ❌ |
+| 85 | `filesys/extended/dir-rm-cwd` | ❌ | ❌ | ❌ |
+| 86 | `filesys/extended/dir-rm-parent` | ❌ | ❌ | ❌ |
+| 87 | `filesys/extended/dir-rm-root` | ❌ | ❌ | ❌ |
+| 88 | `filesys/extended/dir-rm-tree` | ❌ | ❌ | ❌ |
+| 89 | `filesys/extended/dir-rmdir` | ❌ | ❌ | ❌ |
+| 90 | `filesys/extended/dir-under-file` | ❌ | ❌ | ❌ |
+| 91 | `filesys/extended/dir-vine` | ❌ | ❌ | ❌ |
+| 92 | `filesys/extended/grow-create` | ❌ | ❌ | ❌ |
+| 93 | `filesys/extended/grow-dir-lg` | ❌ | ❌ | ❌ |
+| 94 | `filesys/extended/grow-file-size` | ❌ | ❌ | ❌ |
+| 95 | `filesys/extended/grow-root-lg` | ❌ | ❌ | ❌ |
+| 96 | `filesys/extended/grow-root-sm` | ❌ | ❌ | ❌ |
+| 97 | `filesys/extended/grow-seq-lg` | ❌ | ❌ | ❌ |
+| 98 | `filesys/extended/grow-seq-sm` | ❌ | ❌ | ❌ |
+| 99 | `filesys/extended/grow-sparse` | ❌ | ❌ | ❌ |
+| 100 | `filesys/extended/grow-tell` | ❌ | ❌ | ❌ |
+| 101 | `filesys/extended/grow-two-files` | ❌ | ❌ | ❌ |
+| 102 | `filesys/extended/syn-rw` | ❌ | ❌ | ❌ |
+| 103 | `filesys/extended/dir-empty-name-persistence` | ❌ | ❌ | ❌ |
+| 104 | `filesys/extended/dir-mk-tree-persistence` | ❌ | ❌ | ❌ |
+| 105 | `filesys/extended/dir-mkdir-persistence` | ❌ | ❌ | ❌ |
+| 106 | `filesys/extended/dir-open-persistence` | ❌ | ❌ | ❌ |
+| 107 | `filesys/extended/dir-over-file-persistence` | ❌ | ❌ | ❌ |
+| 108 | `filesys/extended/dir-rm-cwd-persistence` | ❌ | ❌ | ❌ |
+| 109 | `filesys/extended/dir-rm-parent-persistence` | ❌ | ❌ | ❌ |
+| 110 | `filesys/extended/dir-rm-root-persistence` | ❌ | ❌ | ❌ |
+| 111 | `filesys/extended/dir-rm-tree-persistence` | ❌ | ❌ | ❌ |
+| 112 | `filesys/extended/dir-rmdir-persistence` | ❌ | ❌ | ❌ |
+| 113 | `filesys/extended/dir-under-file-persistence` | ❌ | ❌ | ❌ |
+| 114 | `filesys/extended/dir-vine-persistence` | ❌ | ❌ | ❌ |
+| 115 | `filesys/extended/grow-create-persistence` | ❌ | ❌ | ❌ |
+| 116 | `filesys/extended/grow-dir-lg-persistence` | ❌ | ❌ | ❌ |
+| 117 | `filesys/extended/grow-file-size-persistence` | ❌ | ❌ | ❌ |
+| 118 | `filesys/extended/grow-root-lg-persistence` | ❌ | ❌ | ❌ |
+| 119 | `filesys/extended/grow-root-sm-persistence` | ❌ | ❌ | ❌ |
+| 120 | `filesys/extended/grow-seq-lg-persistence` | ❌ | ❌ | ❌ |
+| 121 | `filesys/extended/grow-seq-sm-persistence` | ❌ | ❌ | ❌ |
+| 122 | `filesys/extended/grow-sparse-persistence` | ❌ | ❌ | ❌ |
+| 123 | `filesys/extended/grow-tell-persistence` | ❌ | ❌ | ❌ |
+| 124 | `filesys/extended/grow-two-files-persistence` | ❌ | ❌ | ❌ |
+| 125 | `filesys/extended/syn-rw-persistence` | ❌ | ❌ | ❌ |
+
+  </details>
+  </details>
