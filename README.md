@@ -323,17 +323,25 @@
 <details>
    <summary>Parte 3</summary>
 <details>
-TODO: Talvez mudar como apresentar as principais estruturas
    <summary>Objetivos Principais</summary>
    Toda essa parte do projeto basicamente vai lidar com diferentes tipos de paginação para diferentes objetivos, em resumo vai ser necessário implementar 4 estruturas de dados, cada uma com uma lógica e servindo para completar um dos objetivos dessa parte; Vai precisar modificar as pastas `vm/`,  `devices/` e `userprog/`
+
 ##### Paging
+
    A 1° estrutura é uma tabela de páginas suplementar que vai conter dados adicionais sobre cada página em uso ou não, envolvendo talvez modificar o `pagedir`(segundo a documentação modificar isso é só para quem é nível avançado) e melhorar o caso da ocorrência de um `page_fault()`
+  
 ##### Stack Growth
+
 Basicamente implementar uma tabela representando os frames atualmente carregados em memória, usando principalmente de funções como as encontradas em `palloc.c`
+
 ##### Memory Mapped Files
+
 Vai criar uma tabela de mapeamento dos arquivos em disco, usando da lógica de páginas virtuais
+
 ##### Acessing User Memory
+
 A última estrutura vai ser uma tabela de swap, que vai gerenciar os slots disponíveis e usados na memória e gerenciar como vai ocorrer a cópia dos dados para a partição de swap
+
  </details>
 
  <details>
@@ -461,6 +469,7 @@ A última estrutura vai ser uma tabela de swap, que vai gerenciar os slots dispo
    <summary>Parte 4</summary>
 <details>
    <summary>Objetivos Principais</summary>
+   Completar o sistema de arquivos atual
  </details>
 
 <details>
