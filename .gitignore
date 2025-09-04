@@ -1,5 +1,5 @@
 
-  # files extensions
+# files extensions
 
 # classes de java
 *.class
@@ -12,6 +12,9 @@
 # instancias do vim
 *.swp
 *.log
+# src tmp files
+*.dsk
+
 
 # folders
 

@@ -603,10 +603,16 @@ sub finish {
     print RESULT "$_\n" foreach @messages;
     close (RESULT);
 
+    # Define color codes for terminal output
+    my $green = "\033[32m";
+    my $red = "\033[31m";
+    my $reset = "\033[0m";
+    my $bold = "\033[1m";
+
     if ($verdict eq 'PASS') {
-	print STDOUT "pass $test\n";
+	print STDOUT "${bold}${green}PASS${reset} $test\n";
     } else {
-	print STDOUT "FAIL $test\n";
+	print STDOUT "${bold}${red}FAIL${reset} $test\n";
     }
     print STDOUT "$_\n" foreach @messages;
 
