@@ -288,18 +288,24 @@ Implementar um buffer para utilizar de cache dos blocos de arquivos, sugerindo p
 A maioria dos testes precisam desse ponto para começar, ja que o arquivo de teste que eles usam já passa do tamanho de arquivo que o sistema sustenta antes de implementar isso.
 Criação de estruturas de indexação direta, indireta e/ou duplamente indireta para gerenciar a fragmentação dos blocos de arquivos, distribuindo os blocos nos espaços disponíveis; A partição de arquivos será no máximo de 8Mb nos testes, mas deve suportar arquivos maiores que esse limite, permitindo também o crescimento dos arquivos.
 A lógica base que é indicada na doc oficial é criar uma mistura de lista de blocos diretamente, indiretamente e duplamente indireta, os valores que ele indica é 12 blocos de setores diretos, cada um tem 512 bytes, depois um bloco indireto que vai ter 128 ponteiros para blocos e depois outro bloco indireto que vai ter mais 128 ponteiros para outros blocos com 128 ponteiros, oque da de memória:
+
 $$
 \text{Diretos = } 12 * 512 \to 6144~bytes \to 6~kb
 $$
-![[diretos.png]]
+
+![diretos.png](diretos.png)
+
  $$
 \text{Indiretos = } 128 * 512 \to 65536~bytes \to 65~kb
 $$
-![[indiretos.png]]
- $$
+
+![indiretos.png](indiretos.png)
+
+$$
 \text{Duplamente Indiretos = } 128 * 128 * 512 \to 8388608~bytes \to 8~mb
 $$
-![[duplamente_indiretos.png]]
+
+![duplamente_indiretos.png](duplamente_indiretos.png)
 
 ##### Subdirectories
 
