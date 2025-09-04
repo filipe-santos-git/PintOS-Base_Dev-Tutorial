@@ -133,8 +133,6 @@ $$
    O kernel não suporta float nem double, então a documentação recomenda usar o formato de 17.14, 17 bits para a parte inteira e 14 para a fracionária; Para transformar reais nesses tipos basta multiplicar por 2^Q, onde Q é o numero de bits separado para a parte fracionária, e truncar para int, a documentação recomenda usar isso no recent cpu time e no avg, basicamente simulando operações em float usando inteiros (ver [aqui](https://www.scs.stanford.edu/23wi-cs212/pintos/pintos_7.html) como as operações podem ser feitas);
 
 ###### Detalhes
-
-- Para nossa aplicação do projeto de Infraestrutura de Software, nenhum dos testes de priority serão exigidos;
 - Os testes do alarm, quando executado, podem sinalizar que estão funcionando, porém, estão em espera ocupado, portanto não estão devidamente implementado;
 - Há esses vídeos de guia sobre o assunto, caso necessite de ajuda: `https://www.youtube.com/watch?v=myO2bs5LMak` e `https://www.youtube.com/watch?v=57r9OCN1EfA` (são aulas sobre a implementação do projeto completo do PintOS);
 
