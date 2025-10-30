@@ -42,16 +42,19 @@
 
 ##### Tutorial de comandos inicias
 
-- Uma vez que todos os recursos já estiverem instalados e sua branch desse repositório devidamente clonado, basta executar alguns `make`antes de começar a modificar o arquivo;
-- Primeiramente, pelo terminal, vá até a pasta `src/utils` do repositório clonado e execute `make`, isso vai gerar alguns executáveis que o projeto usa para testar o código;
-- Em seguida dependendo a parte do projeto que se está a pasta vai mudar mas o básico para testagem é entrar na pasta, dentro de `src/` da parte do projeto, 1°: `threads/` , 2°: `userprog/` , 3°: `vm/` , 4°: `filesys/`
-- Dentro da pasta certa execute o comando de `make`, ele vai criar o diretório `build/`, em que basicamente vai estar o estado do sistema atual.
-- Para executar os testes usa o comando `make check` dentro desse diretório, por padrão executando no terminal e mostrando os testes que passaram.
+- Os comandos em geral já estão com os respectivos paths de forma automática, assim só entender o principal comando de `make` para compilar o kernel e rodar os testes.
+- Cada parte do projeto vai trabalhar principalmente em uma pasta específica, dentro de `src/`:
+  1. A primeira parte vai trabalhar e rodar os testes na pasta `threads/`(Cadeira de Sistemas Operacionais-CIN015 irá fazer apenas uma parte dessa parte, não precisa avançar mais).
+  2. A segunda parte vai trabalhar e rodar os testes na pasta `userprog/`(Trabalhar com progamas de usuários).
+  3. A terceira parte vai trabalhar e rodar os testes na pasta `vm/`(Trabalhar com memória virtual).
+  4. A quarta parte vai trabalhar e rodar os testes na pasta `filesys/`(Trabalhar com o sistema de arquivos).
+- Dentro da pasta certa execute o comando de `make`, ele vai criar o diretório `build/`, em vamos ter o kernel compilado do sistema.
+- Para executar os testes usa o comando `make check` dentro desse diretório(dentro do `build/` ou na pasta diretamente acima), por padrão executando no terminal e mostrando os testes que passaram.
 - Caso deseje executar novamente, pode dar `make clean`, dentro da pasta `build/`, antes de usar o próximo `make check`;
 - Podemos rodar um teste em específico usando basicamente `make <nome do teste>.result`, mas o nome do teste vai ser algo como por exemplo`tests/vm/page-linear`.
 - Existe o comando `make check VERBOSE=1` fará com que tudo seja executado de maneira mais limpa em que cada teste aparecerá no terminal apenas durante sua execução;
 - Caso você queira, pode ir na pasta `src/tests/`, os subdiretórios basicamente contém os códigos dos respectivos testes;
-- Todos os testes executados geram alguns arquivos relatando a saída e se passou ou não, que ficam na pasta `build/tests`;
+- Todos os testes executados geram alguns arquivos relatando a saída e se passou ou não, que ficam na pasta `build/tests` do respectivo diretório de trabalho do projeto;
 
 ##### Observações
 
@@ -65,6 +68,9 @@
 - [ ] Alarm Clock;
 - [ ] Priority;
 - [ ] Advanced Scheduler - Multi-Level Feedback Queue (mlfqs);
+
+##### OBS
+O projeto da cadeira de Sistemas Operacionais-CIN015 deve fazer apenas o *Alarm Clock* e o *Advanced Scheduler*.
 
 #### Parte 2
 
