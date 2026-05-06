@@ -126,7 +126,7 @@ $$
    O `cpu_recent_time` é uma média móvel exponencial, específica de cada thread e que começa em 0, que serve como peso na hora de calcular a prioridade, que consiste em considerar uma função exponencial em que com o passar do temp os cpu-time antigos tenham pesos menores e os mais recentes os pesos maiores; todas as threads devem ter seu recent time recalculados 1 vez por segundo (timer_ticks() % TIMER_FREQ == 0) usando:
 
 $$
-CpuTime = ( \frac{2 * avg}{2 * avg + 1} * CpuTime + nice) * 100
+CpuTime = (\frac{2 * avg}{2 * avg + 1} * CpuTime + nice) * 100
 $$
    O `nice` é específico de cada thread, há funções a se implementar e fazê-lo funcionar corretamente; ele deve estar entre -20 e 20 e vai servir para calcular a prioridade em que quanto mais positivo, menor a prioridade, que será calculada usando o `recent_time` (apenas se ele mudar) para alterar a thread de fila na mlfq, usando a fórmula:
 
