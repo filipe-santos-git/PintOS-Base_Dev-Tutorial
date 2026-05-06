@@ -128,6 +128,7 @@ $$
 $$
 cpuTime = (\frac{2 * avg}{2 * avg + 1} * CpuTime + nice) * 100
 $$
+   
    O `nice` é específico de cada thread, há funções a se implementar e fazê-lo funcionar corretamente; ele deve estar entre -20 e 20 e vai servir para calcular a prioridade em que quanto mais positivo, menor a prioridade, que será calculada usando o `recent_time` (apenas se ele mudar) para alterar a thread de fila na mlfq, usando a fórmula:
 
 $$
