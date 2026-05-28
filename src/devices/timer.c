@@ -20,6 +20,10 @@
 /* Number of timer ticks since OS booted. */
 static int64_t ticks;
 
+/* [ALARM CLOCK] Lista de threads dormindo, ordenada pelo tick de despertar.
+   Usada para substituir o busy-wait por espera bloqueada. */
+static struct list sleeping_list;
+
 /* Number of loops per timer tick.
    Initialized by timer_calibrate(). */
 static unsigned loops_per_tick;
@@ -35,8 +39,26 @@ static void real_time_delay (int64_t num, int32_t denom);
 void
 timer_init (void) 
 {
+  /* [ALARM CLOCK] Inicializa a lista de threads dormindo antes de qualquer tick. */
+  list_init(&sleeping_list);
   pit_configure_channel (0, 2, TIMER_FREQ);
   intr_register_ext (0x20, timer_interrupt, "8254 Timer");
+}
+
+/* [ALARM CLOCK] Função de comparação para inserção ordenada na sleeping_list.
+   Ordena pelo wakeup_tick crescente; em caso de empate, maior prioridade primeiro.
+   Isso permite que o timer_interrupt percorra apenas o início da lista para
+   acordar threads, parando no primeiro elemento cujo tempo ainda não chegou. */
+static bool
+sort_by_wakeup_tick(const struct list_elem *a, const struct list_elem *b, void *aux UNUSED)
+{
+  struct thread *thread_a = list_entry(a, struct thread, sleep_elem);
+  struct thread *thread_b = list_entry(b, struct thread, sleep_elem);
+  if (thread_a->wakeup_tick == thread_b->wakeup_tick) {
+    return thread_a->priority > thread_b->priority;
+  }
+  return thread_a->wakeup_tick < thread_b->wakeup_tick;
+
 }
 
 /* Calibrates loops_per_tick, used to implement brief delays. */
@@ -84,16 +106,74 @@ timer_elapsed (int64_t then)
   return timer_ticks () - then;
 }
 
+/* Timer interrupt handler. */
+static void
+timer_interrupt (struct intr_frame *args UNUSED)
+{
+  ticks++;
+  thread_tick ();
+  
+  /* [MLFQS] Atualizações periódicas das métricas do escalonador.
+     - A cada tick:           incrementa recent_cpu da thread em execução.
+     - A cada segundo:        recalcula load_avg e recent_cpu de todas as threads.
+     - A cada 4 ticks:        recalcula a prioridade de todas as threads. */
+  if (thread_mlfqs) {
+    mlfqs_increment_recent_cpu();
+    if (ticks % TIMER_FREQ == 0) {
+      mlfqs_update_load_avg();
+      thread_foreach(mlfqs_update_recent_cpu, NULL);
+    }
+    if (ticks % 4 == 0) {
+      thread_foreach(mlfqs_update_priority, NULL);
+    }
+  }
+
+  /* [ALARM CLOCK] Acorda threads cujo wakeup_tick chegou.
+     A lista está ordenada, então basta checar o primeiro elemento:
+     se o tick atual ainda não chegou para ele, não chegou para nenhum. */
+  while (!list_empty(&sleeping_list)) {
+    struct list_elem *e = list_front(&sleeping_list);
+    struct thread *t = list_entry (e, struct thread, sleep_elem);
+
+    if(ticks >= t->wakeup_tick){
+      list_pop_front(&sleeping_list);
+      thread_unblock(t);
+    }
+    else{
+      break;
+    }
+  }
+}
+
 /* Sleeps for approximately TICKS timer ticks.  Interrupts must
    be turned on. */
 void
 timer_sleep (int64_t ticks) 
 {
+  if (ticks <= 0) {
+    return;
+  }
   int64_t start = timer_ticks ();
+  int64_t wakeup_time = start + ticks;
 
   ASSERT (intr_get_level () == INTR_ON);
-  while (timer_elapsed (start) < ticks) 
-    thread_yield ();
+  
+  /* [ALARM CLOCK] Substituição do busy-wait por espera bloqueada:
+     1. Desabilita interrupções para evitar condição de corrida.
+     2. Registra o tick absoluto de despertar na struct da thread.
+     3. Insere a thread na sleeping_list de forma ordenada.
+     4. Chama thread_block() — a thread dorme e cede a CPU.
+     5. Ao ser desbloqueada pelo timer_interrupt, reabilita interrupções. */
+  enum intr_level old_level = intr_disable();
+  struct thread *t = thread_current();
+  
+  t->wakeup_tick = wakeup_time;
+
+  list_insert_ordered(&sleeping_list, &t->sleep_elem, sort_by_wakeup_tick, NULL);
+
+  thread_block();
+
+  intr_set_level (old_level);
 }
 
 /* Sleeps for approximately MS milliseconds.  Interrupts must be
@@ -164,14 +244,6 @@ void
 timer_print_stats (void) 
 {
   printf ("Timer: %"PRId64" ticks\n", timer_ticks ());
-}
-
-/* Timer interrupt handler. */
-static void
-timer_interrupt (struct intr_frame *args UNUSED)
-{
-  ticks++;
-  thread_tick ();
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer
